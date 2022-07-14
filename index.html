@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="todo">
+        <label for="task-name"> Название задачи</label>
+        <input type="text" name="task-name" v-model="taskName" value = "test_user">
+        <button class="task__add" v-on:click="addNewTask">Добавить задачу</button>
+        <div class="task__list" id="task__list">
+            <new-task 
+                v-for="task in taskNameList" 
+                v-bind:name="task.name"
+            ></new-task>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.0/dist/vue.js"></script>
+    <script src="vue.js"></script>
+</body>
+</html>
