@@ -8,6 +8,7 @@ Vue.component('add-new-task', {
         <input type="text" name="task-name" 
             v-bind:value = "value"
             v-on:input="$emit('input', $event.target.value)"  
+            
         >
         <button class="task__add" v-on:click.prevent="$emit('addNewTask')">Добавить задачу</button>  
     </form>

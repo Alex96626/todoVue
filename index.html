@@ -16,12 +16,12 @@
         <button class="task__add" v-on:click.prevent="addNewTask">Добавить задачу</button>  
     </form> -->
     <div id="todo">
-        <add-new-task></add-new-task>
+        <add-new-task v-model="taskName"></add-new-task>
         <div class="task__list" id="task__list">
             <new-task 
                 v-for="task in taskNameList" 
                 v-bind:task="task"
-                v-model="taskName"
+                
             ></new-task>
         </div>
     </div>
