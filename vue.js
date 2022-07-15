@@ -13,7 +13,9 @@ Vue.component('add-new-task', {
         addNewTask: function () {
             console.log(vm.taskName)
             vm.taskNameList.push({name: vm.taskName})
-        } 
+        },
+
+        
     },
 
     template: `
@@ -30,13 +32,26 @@ Vue.component('add-new-task', {
 })
 
 Vue.component ('new-task' , {
-    props: ['task'],
+    props: ['task', 'checked'],
     template: `
-        <div class = 'task__item'>
-            <input type = 'checkbox' name = 'task-status'>
+        <div class = 'task__item' v-bind:class="{active:isActive}">
+            <input type = 'checkbox' name = 'task-status' v-on:click='finishTask'>
             <p class = 'task-name'>{{task.name}}</p>
         </div>
     `,
+
+    data: function() {
+        return {
+            isActive: false,
+        }
+    },
+    
+    methods: {
+        finishTask: function(event) {
+            event.target.checked ? this.isActive = true: this.isActive = false
+
+        }
+    }
     
 })
 
@@ -45,6 +60,7 @@ const vm = new Vue({
     data: { 
         taskName: '' ,
         taskNameList: [], 
+        isActive: false,
     },
 
 })
