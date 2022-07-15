@@ -2,21 +2,32 @@
 Vue.component('add-new-task', {
     
     props: ['value'],
+    
+    data: function() {
+        return {
+            taskName: '',
+            taskNameList: [], 
+        }
+    },
+    methods: {
+        addNewTask: function () {
+            console.log(vm.taskName)
+            vm.taskNameList.push({name: vm.taskName})
+        } 
+    },
+
     template: `
     <form class="add-task">
         <label for="task-name"> Название задачи</label>
         <input type="text" name="task-name" 
             v-bind:value = "value"
-            v-on:input="$emit('input', $event.target.value)"  
+            v-on:input="$emit('input',$event.target.value)"
             
         >
-        <button class="task__add" v-on:click.prevent="$emit('addNewTask')">Добавить задачу</button>  
+        <button class="task__add" v-on:click.prevent='addNewTask'>Добавить задачу</button>  
     </form>
     `,
-   
 })
-
-
 
 Vue.component ('new-task' , {
     props: ['task'],
@@ -32,16 +43,10 @@ Vue.component ('new-task' , {
 const vm = new Vue({
     el: '#todo',
     data: { 
-        taskName: '',
-        taskNameList: [],   
+        taskName: '' ,
+        taskNameList: [], 
     },
 
-    methods: {
-        addNewTask: function () {
-            this.taskNameList.push({name: this.taskName})
-        } 
-    }
-    
 })
 
 
