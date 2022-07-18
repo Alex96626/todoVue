@@ -1,0 +1,19 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.task__item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 250px;
+    padding: 10px;
+    background-color: #5de55b7d;
+    border-bottom: 1px solid green;
+}
+
+.active {
+    background: red;
+}

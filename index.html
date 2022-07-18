@@ -4,17 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
-    <!-- <form class="add-task">
-        <label for="task-name"> Название задачи</label>
-        <input type="text" name="task-name" 
-            v-bind:value = "value"
-            v-on:input="$emit('input', $event.target.value)"  
-        >
-        <button class="task__add" v-on:click.prevent="addNewTask">Добавить задачу</button>  
-    </form> -->
+
     <div id="todo">
         <add-new-task v-model="taskName"></add-new-task>
         <div class="task__list" id="task__list">
