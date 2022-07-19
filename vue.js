@@ -16,10 +16,12 @@ Vue.component('add-new-task', {
 })
 
 Vue.component ('new-task' , {
-    props: ['task'],
+    props: ['task', 'closed'],
     template: `
-        <div class = 'task__item'>
-            <input type = 'checkbox' name = 'task-status' v-on:click="$emit('closetask', $event)">
+        <div v-bind:class="['task__item', { 'active': task.closed}]">
+            <input type = 'checkbox' name = 'task-status' 
+            v-on:click="$emit('close-task', task, $event)"
+            >
             <p class = 'task-name'>{{task.name}}</p>
         </div>
     `,
@@ -31,21 +33,22 @@ const vm = new Vue({
     data: { 
         taskName: '' ,
         taskNameList: [], 
-        isActive: false,
+
     },
 
     methods: {
         addNewTask: function () {
-            this.taskNameList.push({name: this.taskName})
+            this.taskNameList.push({
+                name: this.taskName,
+                closed: false
+            })
+           
         },
 
-        finishTask: function(event) {
-            console.log(event)
-            event.target.checked ? this.isActive = true : this.isActive = false
-
+        finishTask: function(task, event) {
+           task.closed = event.target.checked
         }
 
-        
     },
 
 })

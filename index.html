@@ -15,8 +15,9 @@
             <new-task 
                 v-for="task in taskNameList" 
                 v-bind:task="task"
-                v-on:closetask="finishTask"
-                v-bind:class="{active:isActive}"
+                v-on:close-task="finishTask"
+                
+               
             ></new-task>
         </div>
     </div>
