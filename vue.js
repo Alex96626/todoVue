@@ -19,8 +19,9 @@ Vue.component ('new-task' , {
     props: ['task', 'closed'],
     template: `
         <div v-bind:class="['task__item', { 'active': task.closed}]">
-            <input type = 'checkbox' name = 'task-status' 
-            v-on:click="$emit('close-task', task, $event)"
+            <input type = 'checkbox' name = 'task-status'
+            v-bind:checked="task.closed"
+            v-on:click="$emit('close-task', task)"
             >
             <p class = 'task-name'>{{task.name}}</p>
         </div>
@@ -32,7 +33,16 @@ const vm = new Vue({
     el: '#todo',
     data: { 
         taskName: '' ,
-        taskNameList: [], 
+        taskNameList: [
+            {
+                name: 11,
+                closed:true,
+            },
+            {
+                name:22,
+                closed:false,
+            }
+        ], 
 
     },
 
@@ -45,8 +55,8 @@ const vm = new Vue({
            
         },
 
-        finishTask: function(task, event) {
-           task.closed = event.target.checked
+        finishTask: function(task) {
+           task.closed = !task.closed
         }
 
     },
