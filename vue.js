@@ -10,18 +10,23 @@ Vue.component('add-new-task', {
             v-bind:value = "value"
             v-on:input="$emit('input',$event.target.value)" 
         >
-        <button class="task__add" v-on:click.prevent="$emit('addtask')">Добавить задачу</button>  
+        <button class="task__add" 
+        v-on:click.prevent="$emit('addtask')"
+        
+        
+        
+        >Добавить задачу</button>  
     </form>
     `,
 })
 
 Vue.component ('new-task' , {
-    props: ['task', 'closed'],
+    props: ['task'],
     template: `
         <div v-bind:class="['task__item', { 'active': task.closed}]">
             <input type = 'checkbox' name = 'task-status'
-            v-bind:checked="task.closed"
-            v-on:click="$emit('close-task', task)"
+                v-bind:checked="task.closed"
+                v-on:click="$emit('close-task', task)"
             >
             <p class = 'task-name'>{{task.name}}</p>
         </div>
@@ -33,16 +38,7 @@ const vm = new Vue({
     el: '#todo',
     data: { 
         taskName: '' ,
-        taskNameList: [
-            {
-                name: 11,
-                closed:true,
-            },
-            {
-                name:22,
-                closed:false,
-            }
-        ], 
+        taskNameList: JSON.parse(localStorage.getItem('task')) ?? [], 
 
     },
 
@@ -57,9 +53,21 @@ const vm = new Vue({
 
         finishTask: function(task) {
            task.closed = !task.closed
+        },
+
+        saveToLocal: function() {
+            
+            localStorage.setItem('task', JSON.stringify(this.taskNameList))
+            console.log(localStorage)
         }
 
     },
+    watch: {
+        taskNameList : {
+            deep: true,
+            handler: 'saveToLocal'
+        },
+    }
 
 })
 
