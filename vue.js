@@ -1,20 +1,21 @@
 
 Vue.component('add-new-task', {
     
-    props: ['value'],
+    props: ['value', 'notes'],
 
     template: `
     <form class="add-task">
         <label for="task-name"> Название задачи</label>
         <input type="text" name="task-name" 
-            v-bind:value = "value"
+            v-bind:notes = "notes"
             v-on:input="$emit('input',$event.target.value)" 
         >
+        <textarea  
+            v-bind:value = "value"
+            v-on:input="$emit('update',$event.target.value)"
+        ></textarea>
         <button class="task__add" 
-        v-on:click.prevent="$emit('addtask')"
-        
-        
-        
+            v-on:click.prevent="$emit('addtask')"
         >Добавить задачу</button>  
     </form>
     `,
@@ -29,6 +30,8 @@ Vue.component ('new-task' , {
                 v-on:click="$emit('close-task', task)"
             >
             <p class = 'task-name'>{{task.name}}</p>
+            <p class = 'task-create-date'>{{task.createDate}} </p>
+            <p class = "task-notes">{{task.notes}} </p>
         </div>
     `,
     
@@ -38,15 +41,28 @@ const vm = new Vue({
     el: '#todo',
     data: { 
         taskName: '' ,
-        taskNameList: JSON.parse(localStorage.getItem('task')) ?? [], 
-
+        taskNameList: JSON.parse(localStorage.getItem('task')) ?? [],
+        notes: 'qq', 
+       
+        getDate : function() {
+            const date = new Date()
+            const nowDate = {}
+            nowDate.fullDate  = () =>  date.toLocaleDateString().split('.').join(':')
+            nowDate.hours = () => date.getHours()
+            nowDate.minutes = () => date.getMinutes()
+            return nowDate
+        }
+ 
     },
 
     methods: {
         addNewTask: function () {
+           const {fullDate, hours, minutes } = this.getDate()   
             this.taskNameList.push({
                 name: this.taskName,
-                closed: false
+                closed: false,
+                createDate : `${hours()}:${minutes()}:${fullDate()}`,
+                notes: this.notes
             })
            
         },
@@ -56,9 +72,7 @@ const vm = new Vue({
         },
 
         saveToLocal: function() {
-            
             localStorage.setItem('task', JSON.stringify(this.taskNameList))
-            console.log(localStorage)
         }
 
     },

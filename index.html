@@ -12,16 +12,21 @@
     <div id="todo">
         <add-new-task v-model="taskName" 
             v-on:addtask="addNewTask"
-            v-on:savelocalstorage="saveToLocal"
-        ></add-new-task>
+            
+        >
+            
+        </add-new-task>
         <div class="task__list" id="task__list">
             <new-task 
                 v-for="task in taskNameList" 
                 v-bind:task="task"
+                
                 v-on:close-task="finishTask"
                 
                
-            ></new-task>
+            >
+            
+        </new-task>
         </div>
     </div>
 
