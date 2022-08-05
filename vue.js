@@ -1,28 +1,40 @@
 
 Vue.component('add-new-task', {
     
-    props: ['value', 'notes'],
+    // props: ['value', 'notes'],
+    data: function () {
+        return {
+            taskName : '',
+            notes: '', 
+        }
+    },
+
+    methods: {
+        
+    },
 
     template: `
     <form class="add-task">
         <label for="task-name"> Название задачи</label>
         <input type="text" name="task-name" 
-            v-bind:notes = "notes"
-            v-on:input="$emit('input',$event.target.value)" 
+            v-model="taskName"
+           
         >
         <textarea  
-            v-bind:value = "value"
-            v-on:input="$emit('update',$event.target.value)"
+            v-model="notes"
         ></textarea>
         <button class="task__add" 
             v-on:click.prevent="$emit('addtask')"
         >Добавить задачу</button>  
     </form>
     `,
+
+    
 })
 
 Vue.component ('new-task' , {
     props: ['task'],
+    
     template: `
         <div v-bind:class="['task__item', { 'active': task.closed}]">
             <input type = 'checkbox' name = 'task-status'
@@ -40,9 +52,9 @@ Vue.component ('new-task' , {
 const vm = new Vue({
     el: '#todo',
     data: { 
-        taskName: '' ,
+        // taskName: '' ,
         taskNameList: JSON.parse(localStorage.getItem('task')) ?? [],
-        notes: 'qq', 
+        // notes: 'qq', 
        
         getDate : function() {
             const date = new Date()
@@ -56,12 +68,13 @@ const vm = new Vue({
     },
 
     methods: {
+        
         addNewTask: function () {
-           const {fullDate, hours, minutes } = this.getDate()   
+            const {fullDate, hours, minutes } = this.getDate()   
             this.taskNameList.push({
                 name: this.taskName,
                 closed: false,
-                createDate : `${hours()}:${minutes()}:${fullDate()}`,
+                // createDate : `${hours()}:${minutes()}:${fullDate()}`,
                 notes: this.notes
             })
            
@@ -76,6 +89,7 @@ const vm = new Vue({
         }
 
     },
+
     watch: {
         taskNameList : {
             deep: true,
